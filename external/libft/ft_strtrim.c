@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 11:47:36 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/08 11:51:29 by omawele          ###   ########.fr       */
+/*   Updated: 2026/06/27 22:43:55 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,24 @@ char	*ft_strtrim(char const *s1, char const *set)
 	int		i;
 	int		n;
 
-	j = 0;
+	if (!s1 || !set)
+		return (NULL);
 	i = ft_strlen(s1);
-	while (chr(s1[j], set) == 1)
+	if (!i)
+		return (empty());
+	j = 0;
+	while (s1[j] && chr(s1[j], set))
 		j++;
-	while (chr(s1[i - 1], set) == 1)
+	while (i > j && chr(s1[i - 1], set))
 		i--;
 	i -= j;
 	if (i <= 0)
 		return (empty());
-	tmp = malloc((i + 1) * sizeof(char));
-	if (tmp == NULL)
+	tmp = ft_calloc((i + 1), sizeof(char));
+	if (!tmp)
 		return (NULL);
-	n = 0;
-	while (n < i)
-	{
+	n = -1;
+	while (++n < i)
 		tmp[n] = s1[j++];
-		n++;
-	}
-	tmp[n] = '\0';
 	return (tmp);
 }
