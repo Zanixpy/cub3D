@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 18:31:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/27 22:26:34 by omawele          ###   ########.fr       */
+/*   Updated: 2026/06/28 17:13:23 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ t_game *struct_init(void)
     tmp->ceiling_RGB[0] = -1;
     tmp->ceiling_RGB[1] = -1;
     tmp->ceiling_RGB[2] = -1;
-    tmp->brut_texture[0] = NULL;
-    tmp->brut_texture[1] = NULL;
-    tmp->brut_texture[2] = NULL;
-    tmp->brut_texture[3] = NULL;
+    tmp->NO_texture = NULL;
+    tmp->SO_texture = NULL;
+    tmp->WE_texture = NULL;
+    tmp->EA_texture = NULL;
     return (tmp);
 }
 
@@ -43,6 +43,14 @@ void struct_destroy(t_game **game)
         free((*game)->mlx);
     if ((*game)->fd > -1)
         close((*game)->fd);
+    if ((*game)->NO_texture)
+        free((*game)->NO_texture);
+    if ((*game)->SO_texture)
+        free((*game)->SO_texture);
+    if ((*game)->WE_texture)
+        free((*game)->WE_texture);
+    if ((*game)->EA_texture)
+        free((*game)->EA_texture);
     free(*game);
     *game = NULL;
 }
