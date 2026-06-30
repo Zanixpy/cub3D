@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 21:21:19 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/27 21:22:32 by omawele          ###   ########.fr       */
+/*   Updated: 2026/06/30 18:31:52 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_char_array_n(char ***tab, int n)
 		n--;
 	}
 	free(*tab);
-    *tab = NULL;
+	*tab = NULL;
 }
 
 void	free_char_array(char ***tab)
@@ -38,7 +38,7 @@ void	free_char_array(char ***tab)
 		n++;
 	}
 	free(*tab);
-    *tab = NULL;
+	*tab = NULL;
 }
 
 void	free_str(char **s)
@@ -48,4 +48,11 @@ void	free_str(char **s)
 		free(*s);
 		*s = NULL;
 	}
+}
+
+void	close_fd(int *fd)
+{
+	if (*fd > -1)
+		close(*fd);
+	*fd = -2;
 }

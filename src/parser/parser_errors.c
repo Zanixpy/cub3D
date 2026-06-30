@@ -6,25 +6,43 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:14:27 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/27 22:01:01 by omawele          ###   ########.fr       */
+/*   Updated: 2026/06/30 18:31:01 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-
-void exit_err_parser(int code)
+void	err_parser(int code)
 {
-    ft_putendl_fd("Error", 2);
-    if (code == 0)
-        ft_putendl_fd("No argument", 2);
-    else if (code == 1)
-        ft_putendl_fd("Too much argument", 2);
-    else if (code == 2)
-        ft_putendl_fd("Filename is incorrect", 2);
-    else if (code == 3)
-        ft_putendl_fd("Malloc failed", 2);
-    else if (code == 4);
-        strerror(errno);
-    exit (1);
+	ft_putendl_fd("Error", 2);
+	if (code == 0)
+		ft_putendl_fd("args: no argument", 2);
+	else if (code == 1)
+		ft_putendl_fd("args: too much argument", 2);
+	else if (code == 2)
+		ft_putendl_fd("file: only take named file with .cub extension", 2);
+	else if (code == 3)
+		ft_putendl_fd("malloc: failed", 2);
+	else if (code == 4)
+		perror("file");
+	else if (code == 5)
+		ft_putendl_fd("map: miss, duplicate or wrong element/info", 2);
+	else if (code == 6)
+		ft_putendl_fd("map: incorrect RGB, format: X -> [0,255]: XXX,XXX,XXX",
+			2);
+	else if (code == 7)
+		ft_putendl_fd("map: content is incorrect", 2);
+}
+
+void	exit_err_parser(int code)
+{
+	err_parser(code);
+	exit(1);
+}
+
+void	exit_parser_free_struct(t_game **game, int code)
+{
+	struct_destroy(game);
+	err_parser(code);
+	exit(1);
 }
