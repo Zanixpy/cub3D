@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 22:19:39 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/30 19:24:05 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/01 12:31:44 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,13 @@ static int	count_line(t_game *game)
 	{
 		if (start != 6 && is_element(line))
 			start++;
-		else if (is_map_element(game, line) && start == 6)
+		else if (is_map_element(game, line) && start == 6 && line[0] != '\n')
 			count++;
 		else if (line[0] != '\n')
 			return (err_parser(7), close(fd), free(line), -1);
 		free(line);
-		line = get_next_line(game->fd);
+		line = get_next_line(fd);
 	}
-    printf(" count line : %d\n", count);
 	return (close(fd), count);
 }
 
@@ -68,7 +67,7 @@ static int	init_map(t_game *game)
 	game->fd = open(game->filename, O_RDONLY);
 	if (game->fd == -1)
 		return (err_parser(4), 1);
-	game->map = ft_calloc(game->height, sizeof(char *));
+	game->map = ft_calloc(game->height + 1, sizeof(char *));
 	if (!game->map)
 		return (err_parser(3), 1);
 	return (0);
@@ -87,9 +86,9 @@ int	fill_map(t_game *game)
 	i = 0;
 	while (line)
 	{
-		if (start != 6 && (is_element(line) || line[0] == '\n'))
+		if (start != 6 && is_element(line))
 			start++;
-		else if (is_map_element(game, line) && start == 6)
+		else if (is_map_element(game, line) && start == 6 && line[0] != '\n')
 		{
 			game->map[i] = clean_str(line, 1);
 			if (!game->map[i])

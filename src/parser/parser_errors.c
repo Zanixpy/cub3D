@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:14:27 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/30 18:31:01 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/01 10:53:11 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	err_parser(int code)
 			2);
 	else if (code == 7)
 		ft_putendl_fd("map: content is incorrect", 2);
+    else if (code == 8)
+		ft_putendl_fd("map: not closed/surrounded by walls", 2);
+    else if (code == 9)
+		ft_putendl_fd("map: duplicate player", 2);
+            
 }
 
 void	exit_err_parser(int code)

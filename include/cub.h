@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/30 18:32:09 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/01 14:53:32 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,9 @@ void		free_char_array_n(char ***tab, int n);
 void		free_char_array(char ***tab);
 void		free_str(char **s);
 void		close_fd(int *fd);
+char **ft_arrdup(char **tab);
+
+// main.c
+void print_map(char **map);
 
 #endif

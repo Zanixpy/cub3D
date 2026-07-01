@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 18:31:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/30 18:31:47 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/01 12:13:22 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ static void	struct_set_content(t_game *tmp)
 	tmp->width = 0;
 	tmp->player_direction = 0;
 	tmp->fd = -2;
+    tmp->map = NULL;
+    tmp->mlx = NULL;
+    tmp->mlx_win = NULL;
+    tmp->texture[0] = NULL;
+	tmp->texture[1] = NULL;
+	tmp->texture[2] = NULL;
+	tmp->texture[3] = NULL;
+    tmp->pos_xy[0] = 0;
+    tmp->pos_xy[1] = 0;
 }
 
 static void	struct_destroy_data(t_game *game)

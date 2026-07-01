@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 18:23:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/30 18:31:30 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/01 15:15:46 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	is_RGB(char *str)
 			if (nb > 255 || nb < 0)
 				return (0);
 		}
-		i++;
+        else
+		    i++;
 	}
 	return (1);
 }
@@ -112,18 +113,18 @@ char	*get_filename(char *filepath)
 	int		len;
 
 	len = ft_strlen(filepath);
-	if (len < 4)
+	if (len < 5)
 		return (err_parser(2), NULL);
 	if (ft_strchr(filepath, '/'))
 	{
 		tab = ft_split(filepath, '/');
 		if (!tab)
 			return (err_parser(3), NULL);
-		tmp = ft_strdup(tab[array_size(tab) - 1]);
-		free_char_array(&tab);
+        if (ft_strlen(tab[array_size(tab) - 1]) < 5)
+		    return (err_parser(2), free_char_array(&tab), NULL);
+        free_char_array(&tab);
 	}
-	else
-		tmp = ft_strdup(filepath);
+	tmp = ft_strdup(filepath);
 	if (!tmp)
 		return (err_parser(3), NULL);
 	return (tmp);
