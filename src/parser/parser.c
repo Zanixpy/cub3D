@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:10:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/01 15:32:30 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/02 14:01:40 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static int	check_player(t_game *game)
 
 static void	flood_algorithm(char ***map, int x, int y)
 {
+	if (x < 0 || y < 0)
+		return ;
 	if (!(*map)[y][x] || (*map)[y][x] == SPACE || (*map)[y][x] == '1'
 		|| (*map)[y][x] == 'T')
 		return ;
@@ -80,33 +82,26 @@ static void	flood_algorithm(char ***map, int x, int y)
 	flood_algorithm(map, x - 1, y);
 }
 
-static int	check_wall_border(t_game *game, char **map, int x, int y)
+static int	check_wall_border(t_game *game, char **map, int *x, int y)
 {
-	if (x == 0)
+	if (*x == 0)
 	{
-		while (map[y][x] && map[y][x] == SPACE)
-			x++;
-		if (map[y][x] != '1')
+		while (map[y][*x] && map[y][*x] == SPACE)
+			(*x)++;
+		if (map[y][*x] != '1')
 			return (1);
 	}
-	if (map[y][x + 1] == '\0')
-	{
-		if (map[y][x] != '1')
-			return (1);
-	}
-	if ((y == 0 || y == game->height - 1))
-	{
-		if (map[y][x] != '1' && map[y][x] != SPACE)
-			return (1);
-	}
-	if (map[y][x] == 'T')
-	{
-		if (map[y][x + 1] != '1' && map[y][x + 1] != 'T' && map[y][x - 1] != '1'
-			&& map[y][x - 1] != 'T' && map[y + 1][x] != '1' && map[y
-			+ 1][x] != 'T' && map[y - 1][x] != '1' && map[y - 1][x] != 'T')
-			return (1);
-	}
-    return (0);
+	if (map[y][*x + 1] == '\0' && map[y][*x] != '1')
+		return (1);
+	if ((y == 0 || y == game->height - 1) && (map[y][*x] != '1'
+			&& map[y][*x] != SPACE))
+		return (1);
+	if (map[y][*x] == 'T' && ((map[y][*x + 1] != '1' && map[y][*x + 1] != 'T')
+		|| (map[y][*x - 1] != '1' && map[y][*x - 1] != 'T') || (map[y
+			+ 1][*x] != '1' && map[y + 1][*x] != 'T') || (map[y - 1][*x] != '1'
+			&& map[y - 1][*x] != 'T')))
+		return (1);
+	return (0);
 }
 
 static int	check_wall(t_game *game, char **map)
@@ -120,16 +115,14 @@ static int	check_wall(t_game *game, char **map)
 		x = 0;
 		while (map[y][x])
 		{
-            if (check_wall_border(game, map, x, y))
-                return (1);
-            x++;
+			if (check_wall_border(game, map, &x, y))
+				return (1);
+			x++;
 		}
-        y++;
+		y++;
 	}
 	return (0);
 }
-
-
 
 int	parser(int ac, char **av, t_game **game)
 {
