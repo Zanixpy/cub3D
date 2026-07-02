@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/01 14:53:32 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/02 15:24:06 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void		struct_destroy(t_game **game);
 void		exit_err_parser(int code);
 void		err_parser(int code);
 void		exit_parser_free_struct(t_game **game, int code);
+void err_mlx(int code);
 
 // parser_get_element.c
 int			fill_data(t_game *game);
@@ -92,14 +93,17 @@ int			fill_data(t_game *game);
 int			fill_map(t_game *game);
 int			is_map_element(t_game *game, char *line);
 
+// parser_mlx.c
+int init_mlx(t_game *game);
+
 // parser_utils.c
 int			is_element(char *line);
 int			is_RGB(char *str);
-char		*get_filename(char *filepath);
 int			is_element_complete(t_game *game);
+int			get_fd_and_filename(t_game *game, char *av);
 
 // parser.c
-int			parser(int ac, char **av, t_game **game);
+int			parser(char **av, t_game **game);
 
 /* ===================================
  UTILS
@@ -115,9 +119,9 @@ void		free_char_array_n(char ***tab, int n);
 void		free_char_array(char ***tab);
 void		free_str(char **s);
 void		close_fd(int *fd);
-char **ft_arrdup(char **tab);
+char		**ft_arrdup(char **tab);
 
 // main.c
-void print_map(char **map);
+void		print_map(char **map);
 
 #endif

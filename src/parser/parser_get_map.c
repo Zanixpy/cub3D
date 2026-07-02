@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 22:19:39 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/01 12:31:44 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/02 14:47:45 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,34 @@ int	is_map_element(t_game *game, char *line)
 	if (game->width < i)
 		game->width = i;
 	return (1);
+}
+
+int	is_element(char *line)
+{
+	while (*line)
+	{
+		if (ft_isalpha(*line))
+		{
+			if (!ft_strncmp(line, "NO ", 3))
+				return (1);
+			else if (!ft_strncmp(line, "SO ", 3))
+				return (2);
+			else if (!ft_strncmp(line, "WE ", 3))
+				return (3);
+			else if (!ft_strncmp(line, "EA ", 3))
+				return (4);
+			else if (!ft_strncmp(line, "F ", 2))
+				return (5);
+			else if (!ft_strncmp(line, "C ", 2))
+				return (6);
+			else
+				return (0);
+		}
+		else if (*line != SPACE)
+			return (0);
+		line++;
+	}
+	return (0);
 }
 
 static int	count_line(t_game *game)

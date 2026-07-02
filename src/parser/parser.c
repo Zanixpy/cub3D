@@ -6,38 +6,11 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:10:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/02 14:01:40 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/02 15:24:26 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-static void	check_nb_args(int ac)
-{
-	if (ac != 2)
-	{
-		if (ac < 2)
-			exit_err_parser(0);
-		else
-			exit_err_parser(1);
-	}
-}
-
-static int	get_fd_and_filename(t_game *game, char *av)
-{
-	int	len;
-
-	game->filename = get_filename(av);
-	if (!game->filename)
-		return (1);
-	len = ft_strlen(game->filename);
-	if (ft_strcmp(game->filename + (len - 4), ".cub"))
-		return (err_parser(2), 1);
-	game->fd = open(game->filename, O_RDONLY);
-	if (game->fd == -1)
-		return (err_parser(4), 1);
-	return (0);
-}
 
 static int	check_player(t_game *game)
 {
@@ -124,11 +97,10 @@ static int	check_wall(t_game *game, char **map)
 	return (0);
 }
 
-int	parser(int ac, char **av, t_game **game)
+int	parser(char **av, t_game **game)
 {
 	char	**map;
 
-	check_nb_args(ac);
 	*game = struct_init();
 	if (!(*game))
 		exit_parser_free_struct(game, 3);
@@ -147,5 +119,7 @@ int	parser(int ac, char **av, t_game **game)
 	if (check_wall(*game, map))
 		return (free_char_array(&map), err_parser(8), 1);
 	free_char_array(&map);
+	if (init_mlx(*game))
+		return (1);
 	return (0);
 }

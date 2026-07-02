@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:44:16 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/01 14:53:47 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/02 14:41:45 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void print_map(char **map)
         printf("  [%d] %s\n", i, map[i]);
         i++;
     }
-    
 }
 
 void print_struct(t_game *game)
@@ -74,12 +73,23 @@ void print_struct(t_game *game)
     printf("======================\n");
 }
 
+static void	check_nb_args(int ac)
+{
+	if (ac != 2)
+	{
+		if (ac < 2)
+			exit_err_parser(0);
+		else
+			exit_err_parser(1);
+	}
+}
 
 int	main(int ac, char **av)
 {
 	t_game	*game;
 
-	if (parser(ac, av, &game))
+    check_nb_args(ac);
+	if (parser(av, &game))
 	{
 		printf("WRONG PARSING\n");
 		struct_destroy(&game);

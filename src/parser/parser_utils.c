@@ -6,11 +6,36 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 18:23:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/01 15:15:46 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/02 14:48:24 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+static char	*get_filename(char *filepath)
+{
+	char	**tab;
+	char	*tmp;
+	int		len;
+
+	len = ft_strlen(filepath);
+	if (len < 5)
+		return (err_parser(2), NULL);
+	if (ft_strchr(filepath, '/'))
+	{
+		tab = ft_split(filepath, '/');
+		if (!tab)
+			return (err_parser(3), NULL);
+        if (ft_strlen(tab[array_size(tab) - 1]) < 5)
+		    return (err_parser(2), free_char_array(&tab), NULL);
+        free_char_array(&tab);
+	}
+	tmp = ft_strdup(filepath);
+	if (!tmp)
+		return (err_parser(3), NULL);
+	return (tmp);
+}
+
 
 static int	is_RGB_utils(char *str)
 {
@@ -64,34 +89,6 @@ int	is_RGB(char *str)
 	return (1);
 }
 
-int	is_element(char *line)
-{
-	while (*line)
-	{
-		if (ft_isalpha(*line))
-		{
-			if (!ft_strncmp(line, "NO ", 3))
-				return (1);
-			else if (!ft_strncmp(line, "SO ", 3))
-				return (2);
-			else if (!ft_strncmp(line, "WE ", 3))
-				return (3);
-			else if (!ft_strncmp(line, "EA ", 3))
-				return (4);
-			else if (!ft_strncmp(line, "F ", 2))
-				return (5);
-			else if (!ft_strncmp(line, "C ", 2))
-				return (6);
-			else
-				return (0);
-		}
-		else if (*line != SPACE)
-			return (0);
-		line++;
-	}
-	return (0);
-}
-
 int	is_element_complete(t_game *game)
 {
 	if (game->floor_RGB[0] == -1 || game->floor_RGB[1] == -1
@@ -106,26 +103,20 @@ int	is_element_complete(t_game *game)
 	return (1);
 }
 
-char	*get_filename(char *filepath)
+int	get_fd_and_filename(t_game *game, char *av)
 {
-	char	**tab;
-	char	*tmp;
-	int		len;
+	int	len;
 
-	len = ft_strlen(filepath);
-	if (len < 5)
-		return (err_parser(2), NULL);
-	if (ft_strchr(filepath, '/'))
-	{
-		tab = ft_split(filepath, '/');
-		if (!tab)
-			return (err_parser(3), NULL);
-        if (ft_strlen(tab[array_size(tab) - 1]) < 5)
-		    return (err_parser(2), free_char_array(&tab), NULL);
-        free_char_array(&tab);
-	}
-	tmp = ft_strdup(filepath);
-	if (!tmp)
-		return (err_parser(3), NULL);
-	return (tmp);
+	game->filename = get_filename(av);
+	if (!game->filename)
+		return (1);
+	len = ft_strlen(game->filename);
+	if (ft_strcmp(game->filename + (len - 4), ".cub"))
+		return (err_parser(2), 1);
+	game->fd = open(game->filename, O_RDONLY);
+	if (game->fd == -1)
+		return (err_parser(4), 1);
+	return (0);
 }
+
+
