@@ -20,6 +20,9 @@ Launch the program with :
 
 ## Resources
 
+- [Raycasting tutorial by Lode](https://lodev.org/cgtutor/raycasting.html)
+
+- [](https://www.youtube.com/watch?v=gYRrGTC7GtA&t=11s)
 
 ## Ray-casting
 

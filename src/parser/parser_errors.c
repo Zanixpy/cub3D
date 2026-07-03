@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:14:27 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/02 15:18:10 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/03 12:54:33 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	err_parser(int code)
     else if (code == 8)
 		ft_putendl_fd("map: not closed/surrounded by walls", 2);
     else if (code == 9)
-		ft_putendl_fd("map: duplicate player", 2);
+		ft_putendl_fd("map: duplicate or no player", 2);
 }
 
 void	exit_err_parser(int code)
@@ -58,5 +58,15 @@ void err_mlx(int code)
 		ft_putendl_fd("mlx: init failed", 2);
 	else if (code == 1)
 		ft_putendl_fd("mlx: textures load failed", 2);
+	else if (code == 2)
+		ft_putendl_fd("mlx: malloc failed for textures", 2);
 }
+
+void	exit_mlx_free_struct(t_game **game, int code)
+{
+	struct_destroy(game);
+	err_mlx(code);
+	exit(1);
+}
+
 

@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:44:16 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/02 14:41:45 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/03 12:55:10 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,40 +34,39 @@ void print_struct(t_game *game)
     printf("=== STRUCTURE GAME ===\n");
 
     // --- Cartographie et Dimensions ---
-    printf("Height    : %d\n", game->height);
-    printf("Width     : %d\n", game->width);
-    printf("Map       :\n");
+    printf("Height       : %d\n", game->height);
+    printf("Width        : %d\n", game->width);
+    printf("Map          :\n");
     if (game->map)
-        print_map(game->map);
+    {
+        for (int i = 0; game->map[i] != NULL; i++)
+            printf("  [%d] %s\n", i, game->map[i]);
+    }
     else
     {
         printf("  (NULL)\n");
     }
 
     // --- Fichier ---
-    if (game->filename)
-        printf("Filename  : %s\n", game->filename);
-    printf("FD        : %d\n", game->fd);
+    printf("Filename     : %s\n", game->filename ? game->filename : "(NULL)");
+    printf("FD           : %d\n", game->fd);
 
-    // --- Joueur ---
-    if (game->player_direction)
-        printf("Player Dir: %c\n", game->player_direction);
-    printf("Pos XY    : X = %d, Y = %d\n", game->pos_xy[0], game->pos_xy[1]);
+    // --- Joueur et Vecteurs Raycasting ---
+    printf("Player Dir   : %c\n", game->player_direction);
+    printf("Position     : X = %f, Y = %f\n", game->posX, game->posY);
+    printf("Direction Vec: X = %f, Y = %f\n", game->dirX, game->dirY);
+    printf("Camera Plane : X = %f, Y = %f\n", game->planeX, game->planeY);
 
     // --- Chemins des Textures (Strings) ---
-    if (game->NO_texture)
-        printf("NO_texture: %s\n", game->NO_texture);
-    if (game->SO_texture)
-        printf("SO_texture: %s\n", game->SO_texture);
-    if (game->WE_texture)
-        printf("WE_texture: %s\n", game->WE_texture);
-    if (game->EA_texture)
-        printf("EA_texture: %s\n", game->EA_texture);
+    printf("NO_texture   : %s\n", game->NO_texture ? game->NO_texture : "(NULL)");
+    printf("SO_texture   : %s\n", game->SO_texture ? game->SO_texture : "(NULL)");
+    printf("WE_texture   : %s\n", game->WE_texture ? game->WE_texture : "(NULL)");
+    printf("EA_texture   : %s\n", game->EA_texture ? game->EA_texture : "(NULL)");
 
     // --- Couleurs RGB ---
-    printf("Floor RGB  : R=%d, G=%d, B=%d\n", 
+    printf("Floor RGB    : R=%d, G=%d, B=%d\n", 
             game->floor_RGB[0], game->floor_RGB[1], game->floor_RGB[2]);
-    printf("Ceiling RGB: R=%d, G=%d, B=%d\n", 
+    printf("Ceiling RGB  : R=%d, G=%d, B=%d\n", 
             game->ceiling_RGB[0], game->ceiling_RGB[1], game->ceiling_RGB[2]);
 
     printf("======================\n");
@@ -90,12 +89,10 @@ int	main(int ac, char **av)
 
     check_nb_args(ac);
 	if (parser(av, &game))
-	{
-		printf("WRONG PARSING\n");
-		struct_destroy(&game);
-		return (1);
-	}
-    print_struct(game);
-	printf("VALID PARSING\n");
+        exit_parser_free_struct(&game, -1);
+    if (set_floor_ceiling(game))
+        exit_mlx_free_struct(&game, 2);
+    mlx_loop(game->mlx);
+	struct_destroy(&game);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 14:49:58 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/02 15:29:15 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/03 09:41:36 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int init_texture(t_game *game)
     int width;
     int height;
 
+    width = 64;
+    height = 64;
     game->texture[0] = mlx_png_file_to_image(game->mlx, game->NO_texture, &width, &height);
     if (!game->texture[0])
         return (1);
@@ -37,7 +39,7 @@ int init_mlx(t_game *game)
     game->mlx = mlx_init();
     if (!game->mlx)
         return (err_mlx(0), 1);
-    game->mlx_win = mlx_new_window(game->mlx, 1920, 1080, "Zelsky One");
+    game->mlx_win = mlx_new_window(game->mlx, SCREENWIDTH, SCREENHEIGHT, "Zelsky One");
     if (!game->mlx_win)
         return (err_mlx(0), 1);
     if (init_texture(game))

@@ -8,6 +8,7 @@ SRCS =  src/main.c \
 		src/parser/parser_utils.c \
 		src/parser/parser.c \
 		src/parser/parser_mlx.c \
+		src/mlx_window/set_textures.c \
 		src/struct/struct_handling.c \
 		src/utils/memory_utils.c \
 		src/utils/utils.c \

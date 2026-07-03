@@ -1,0 +1,13 @@
+## Raycasting
+
+# What is it ?
+
+Raycasting is a rendiring technique that takes a 2d map (square grid) and gives a 3d perspective.
+
+# Why that's exist ?
+
+In old times, computers were not strong enough to run 3D engine. So raycasting was the first solution
+to this problem notably with the game Wolfenstein 3D, Doom and Duke Nukem 3D.
+
+# How it actually works ?
+

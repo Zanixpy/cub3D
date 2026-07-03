@@ -1,0 +1,12 @@
+## Organise the project after the parsing part
+
+
+Right now with mlx, we need to set the textures by using raycasting but where do we start ? That's what
+these notes are about.
+
+Priority tasks :
+
+
+- Raycasting understanding
+- Mlx textures management
+- 

@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/02 15:24:06 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/03 12:55:29 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define EMPSPACE 0
 # define PLAYER_DIR 'N' || 'S' || 'E' || 'W'
 # define ERRMALLOC 15
+# define SCREENWIDTH 640
+# define SCREENHEIGHT 480
 
 /* ===================================
  STRUCT
@@ -59,7 +61,12 @@ typedef struct s_game
 	void	*mlx_win;
 
 	char	player_direction;
-	int		pos_xy[2];
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
 
 	char	*NO_texture;
 	char	*SO_texture;
@@ -72,9 +79,25 @@ typedef struct s_game
 
 }			t_game;
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_data;
+
 // struct_handling.c
 t_game		*struct_init(void);
 void		struct_destroy(t_game **game);
+
+/* ===================================
+ MLX WINDOW
+=================================== */
+
+// set_textures.c
+int			set_floor_ceiling(t_game *game);
 
 /* ===================================
  PARSER
@@ -84,7 +107,8 @@ void		struct_destroy(t_game **game);
 void		exit_err_parser(int code);
 void		err_parser(int code);
 void		exit_parser_free_struct(t_game **game, int code);
-void err_mlx(int code);
+void		err_mlx(int code);
+void		exit_mlx_free_struct(t_game **game, int code);
 
 // parser_get_element.c
 int			fill_data(t_game *game);
@@ -94,7 +118,7 @@ int			fill_map(t_game *game);
 int			is_map_element(t_game *game, char *line);
 
 // parser_mlx.c
-int init_mlx(t_game *game);
+int			init_mlx(t_game *game);
 
 // parser_utils.c
 int			is_element(char *line);

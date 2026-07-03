@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:10:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/02 15:24:26 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/03 13:00:02 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int	check_player(t_game *game)
 				if (!game->player_direction)
 				{
 					game->player_direction = game->map[y][x];
-					game->pos_xy[0] = x;
-					game->pos_xy[1] = y;
+					game->posX = x;
+					game->posY = y;
 				}
 				else
 					return (1);
@@ -110,12 +110,12 @@ int	parser(char **av, t_game **game)
 		return (1);
 	if (fill_map(*game))
 		return (1);
-	if (check_player(*game))
+	if (check_player(*game) || !(*game)->player_direction)
 		return (err_parser(9), 1);
 	map = ft_arrdup((*game)->map);
 	if (!map)
 		return (err_parser(3), 1);
-	flood_algorithm(&map, (*game)->pos_xy[0], (*game)->pos_xy[1]);
+	flood_algorithm(&map, (*game)->posX, (*game)->posY);
 	if (check_wall(*game, map))
 		return (free_char_array(&map), err_parser(8), 1);
 	free_char_array(&map);
