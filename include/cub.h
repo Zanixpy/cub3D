@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/03 12:55:29 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/09 12:33:50 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,18 @@ typedef struct s_game
 	double	posY;
 	double	dirX;
 	double	dirY;
-	double	planeX;
-	double	planeY;
+	double	planX;
+	double	planY;
+	double  cameraX;
+	double  cameraY;
+	double  rayDirX;
+	double  rayDirY;
+	double  sideDistX;
+	double  sideDisty;
+	int foward;
+	int left;
+	int right;
+	int backwards;
 
 	char	*NO_texture;
 	char	*SO_texture;
@@ -98,6 +108,14 @@ void		struct_destroy(t_game **game);
 
 // set_textures.c
 int			set_floor_ceiling(t_game *game);
+int set_2D_grid(t_game *game);
+int	create_rgb(int r, int g, int b);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+
+// set_moves.c
+int handleKeyPress(int keycode, void *param);
+int handleKeyRelease(int keycode, void *param);
+int handleMoves(void *param);
 
 /* ===================================
  PARSER

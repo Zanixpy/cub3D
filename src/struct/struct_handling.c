@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 18:31:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/03 13:00:43 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/07 16:55:54 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,22 @@ static void	struct_set_content(t_game *tmp)
 	tmp->posY = 0;
 	tmp->dirX = 0;
 	tmp->dirY = 0;
-	tmp->planeX = 0;
-	tmp->planeY = 0;
+	tmp->planX = 0;
+	tmp->planY = 0;
     tmp->texture[0] = NULL;
     tmp->texture[1] = NULL;
     tmp->texture[2] = NULL;
     tmp->texture[3] = NULL;
+	tmp->foward = 0;
+	tmp->left = 0;
+	tmp->right = 0;
+	tmp->backwards = 0;
+	tmp->cameraX = 0;
+	tmp->cameraY = 0;
+	tmp->rayDirX = 0;
+	tmp->rayDirY = 0;
+	tmp->sideDistX = 0;
+	tmp->sideDisty = 0;
 }
 
 static void	struct_destroy_data(t_game *game)
