@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 21:14:56 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/30 18:31:57 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/12 23:03:47 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,21 @@ char	*clean_str(char *s, int mode)
 	}
 	free(tmp);
 	return (str);
+}
+
+
+int	is_space(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != SPACE && (str[i] < 9 || str[i] > 13))
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -6,119 +6,58 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:10:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/03 13:00:02 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/13 01:32:30 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static int	check_player(t_game *game)
+int	set_filename(t_game *game, char *filename)
 {
-	int	x;
-	int	y;
-
-	y = -1;
-	while (game->map[++y])
-	{
-		x = 0;
-		while (game->map[y][x])
-		{
-			if (game->map[y][x] == 'N' || game->map[y][x] == 'S'
-				|| game->map[y][x] == 'E' || game->map[y][x] == 'W')
-			{
-				if (!game->player_direction)
-				{
-					game->player_direction = game->map[y][x];
-					game->posX = x;
-					game->posY = y;
-				}
-				else
-					return (1);
-			}
-			x++;
-		}
-	}
-	return (0);
-}
-
-static void	flood_algorithm(char ***map, int x, int y)
-{
-	if (x < 0 || y < 0)
-		return ;
-	if (!(*map)[y][x] || (*map)[y][x] == SPACE || (*map)[y][x] == '1'
-		|| (*map)[y][x] == 'T')
-		return ;
-	(*map)[y][x] = 'T';
-	flood_algorithm(map, x, y + 1);
-	flood_algorithm(map, x, y - 1);
-	flood_algorithm(map, x + 1, y);
-	flood_algorithm(map, x - 1, y);
-}
-
-static int	check_wall_border(t_game *game, char **map, int *x, int y)
-{
-	if (*x == 0)
-	{
-		while (map[y][*x] && map[y][*x] == SPACE)
-			(*x)++;
-		if (map[y][*x] != '1')
-			return (1);
-	}
-	if (map[y][*x + 1] == '\0' && map[y][*x] != '1')
+	if (check_filename(filename, ".cub"))
 		return (1);
-	if ((y == 0 || y == game->height - 1) && (map[y][*x] != '1'
-			&& map[y][*x] != SPACE))
-		return (1);
-	if (map[y][*x] == 'T' && ((map[y][*x + 1] != '1' && map[y][*x + 1] != 'T')
-		|| (map[y][*x - 1] != '1' && map[y][*x - 1] != 'T') || (map[y
-			+ 1][*x] != '1' && map[y + 1][*x] != 'T') || (map[y - 1][*x] != '1'
-			&& map[y - 1][*x] != 'T')))
+	game->filename = ft_strdup(filename);
+	if (!game->filename)
 		return (1);
 	return (0);
 }
 
-static int	check_wall(t_game *game, char **map)
+int	parse_map_file(t_game *game)
 {
-	int	x;
-	int	y;
+	if (load_elements(game))
+		return (1);
+	if (load_map(game))
+		return (1);
+	return (0);
+}
 
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (check_wall_border(game, map, &x, y))
-				return (1);
-			x++;
-		}
-		y++;
-	}
+int	is_valid_config(t_game *game)
+{
+	char	**map;
+
+	if (check_player(game) || !game->player_direction)
+		return (err_parser(9), 1);
+	map = ft_arrdup(game->map);
+	if (!map)
+		return (err_parser(3), 1);
+	flood_algorithm(&map, game->pos_x, game->pos_y);
+	if (check_wall(game, map))
+		return (free_char_array(&map), err_parser(8), 1);
+	free_char_array(&map);
 	return (0);
 }
 
 int	parser(char **av, t_game **game)
 {
-	char	**map;
-
 	*game = struct_init();
 	if (!(*game))
-		exit_parser_free_struct(game, 3);
-	if (get_fd_and_filename(*game, av[1]))
-		return (1);
-	if (fill_data(*game))
-		return (1);
-	if (fill_map(*game))
-		return (1);
-	if (check_player(*game) || !(*game)->player_direction)
-		return (err_parser(9), 1);
-	map = ft_arrdup((*game)->map);
-	if (!map)
 		return (err_parser(3), 1);
-	flood_algorithm(&map, (*game)->posX, (*game)->posY);
-	if (check_wall(*game, map))
-		return (free_char_array(&map), err_parser(8), 1);
-	free_char_array(&map);
+	if (set_filename(*game, av[1]))
+		return (1);
+	if (parse_map_file(*game))
+		return (1);		
+	if (is_valid_config(*game))
+		return (1);
 	if (init_mlx(*game))
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 16:39:45 by omawele           #+#    #+#             */
-/*   Updated: 2025/12/18 19:57:22 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/12 22:49:10 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	if (read_line(fd, &tmp_buf) < 0)
-		return (NULL);
+		return (free_str(&tmp_buf), NULL);
 	if (!tmp_buf || tmp_buf[0] == '\0')
 		return (free_str(&tmp_buf), NULL);
 	line = create_line(&tmp_buf);

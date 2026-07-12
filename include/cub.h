@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/09 12:33:50 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/13 01:14:00 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,23 @@ typedef struct s_game
 	int		width;
 
 	char	*filename;
-	int		fd;
 
 	void	*mlx;
 	void	*mlx_win;
 
 	char	player_direction;
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planX;
-	double	planY;
-	double  cameraX;
-	double  cameraY;
-	double  rayDirX;
-	double  rayDirY;
-	double  sideDistX;
-	double  sideDisty;
-	int foward;
-	int left;
-	int right;
-	int backwards;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double  camera_x;
+	double  camera_y;
+	double  ray_dir_x;
+	double  ray_dir_y;
+	double  side_dist_X;
+	double  side_dist_y;
 
 	char	*NO_texture;
 	char	*SO_texture;
@@ -121,28 +116,31 @@ int handleMoves(void *param);
  PARSER
 =================================== */
 
-// parser_errors.c
+// check_game_config.c.c
+int	check_player(t_game *game);
+void	flood_algorithm(char ***map, int x, int y);
+int	check_wall(t_game *game, char **map);
+
+// errors.c
 void		exit_err_parser(int code);
 void		err_parser(int code);
-void		exit_parser_free_struct(t_game **game, int code);
 void		err_mlx(int code);
-void		exit_mlx_free_struct(t_game **game, int code);
 
-// parser_get_element.c
-int			fill_data(t_game *game);
+// loads_elements.c
+int	load_elements(t_game *game);
 
-// parser_get_map.c
-int			fill_map(t_game *game);
+// load_map.c
+int	load_map(t_game *game);
 int			is_map_element(t_game *game, char *line);
 
-// parser_mlx.c
+// init_mlx.c
 int			init_mlx(t_game *game);
 
 // parser_utils.c
 int			is_element(char *line);
 int			is_RGB(char *str);
 int			is_element_complete(t_game *game);
-int			get_fd_and_filename(t_game *game, char *av);
+int check_filename(char *filename, char *extension);
 
 // parser.c
 int			parser(char **av, t_game **game);
@@ -155,6 +153,7 @@ int			parser(char **av, t_game **game);
 int			ft_strcmp(const char *s1, const char *s2);
 int			array_size(char **tab);
 char		*clean_str(char *s, int mode);
+int	is_space(char *str);
 
 // memory_utils.c
 void		free_char_array_n(char ***tab, int n);

@@ -6,51 +6,32 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 18:31:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/07 16:55:54 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/13 01:23:00 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	struct_set_content(t_game *tmp)
+
+static void mlx_cleanup(t_game *game)
 {
-	tmp->posX = 0;
-	tmp->posY = 0;
-	tmp->dirX = 0;
-	tmp->dirY = 0;
-	tmp->planX = 0;
-	tmp->planY = 0;
-    tmp->texture[0] = NULL;
-    tmp->texture[1] = NULL;
-    tmp->texture[2] = NULL;
-    tmp->texture[3] = NULL;
-	tmp->foward = 0;
-	tmp->left = 0;
-	tmp->right = 0;
-	tmp->backwards = 0;
-	tmp->cameraX = 0;
-	tmp->cameraY = 0;
-	tmp->rayDirX = 0;
-	tmp->rayDirY = 0;
-	tmp->sideDistX = 0;
-	tmp->sideDisty = 0;
+	if (game->mlx_win)
+		mlx_destroy_window(game->mlx, game->mlx_win);
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 }
 
 static void	struct_destroy_data(t_game *game)
 {
-	close_fd(&game->fd);
-	if (game->map)
-		free_char_array(&game->map);
-	if (game->NO_texture)
-		free(game->NO_texture);
-	if (game->SO_texture)
-		free(game->SO_texture);
-	if (game->WE_texture)
-		free(game->WE_texture);
-	if (game->EA_texture)
-		free(game->EA_texture);
-	if (game->filename)
-		free(game->filename);
+	free_char_array(&game->map);
+	free_str(&game->NO_texture);
+	free_str(&game->SO_texture);
+	free_str(&game->WE_texture);
+	free_str(&game->EA_texture);
+	free_str(&game->filename);
 	if (game->texture[0])
 		mlx_destroy_image(game->mlx, game->texture[0]);
 	if (game->texture[1])
@@ -59,17 +40,14 @@ static void	struct_destroy_data(t_game *game)
 		mlx_destroy_image(game->mlx, game->texture[2]);
 	if (game->texture[3])
 		mlx_destroy_image(game->mlx, game->texture[3]);
-	if (game->mlx_win)
-		mlx_destroy_window(game->mlx, game->mlx_win);
-	if (game->mlx)
-		free(game->mlx);
+	mlx_cleanup(game);
 }
 
 t_game	*struct_init(void)
 {
 	t_game	*tmp;
 
-	tmp = malloc(sizeof(t_game));
+	tmp = ft_calloc(1, sizeof(t_game));
 	if (!tmp)
 		return (NULL);
 	tmp->floor_RGB[0] = -1;
@@ -78,19 +56,14 @@ t_game	*struct_init(void)
 	tmp->ceiling_RGB[0] = -1;
 	tmp->ceiling_RGB[1] = -1;
 	tmp->ceiling_RGB[2] = -1;
-	tmp->NO_texture = NULL;
-	tmp->SO_texture = NULL;
-	tmp->WE_texture = NULL;
-	tmp->EA_texture = NULL;
-	tmp->filename = NULL;
 	tmp->height = 0;
 	tmp->width = 0;
-	tmp->player_direction = 0;
-	tmp->fd = -2;
-    tmp->map = NULL;
-    tmp->mlx = NULL;
-    tmp->mlx_win = NULL;
-	struct_set_content(tmp);
+	tmp->texture[0] = NULL;
+    tmp->texture[1] = NULL;
+    tmp->texture[2] = NULL;
+    tmp->texture[3] = NULL;
+	tmp->pos_x = 0;
+	tmp->pos_y = 0;
 	return (tmp);
 }
 
