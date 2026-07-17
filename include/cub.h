@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/13 01:14:00 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/17 14:11:14 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,22 @@
 # define EMPSPACE 0
 # define PLAYER_DIR 'N' || 'S' || 'E' || 'W'
 # define ERRMALLOC 15
-# define SCREENWIDTH 640
-# define SCREENHEIGHT 480
+# define SCREENWIDTH 1920
+# define SCREENHEIGHT 1080
 
 /* ===================================
  STRUCT
 =================================== */
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_data;
+
 
 typedef struct s_game
 {
@@ -60,6 +70,15 @@ typedef struct s_game
 	void	*mlx_win;
 
 	char	player_direction;
+	int 	map_x;
+	int 	map_y;
+	int		hit;
+	int 	step_x;
+	int 	step_y;
+	int 	side;
+	int draw_start;
+	int draw_end;
+	int line_height;
 	double	pos_x;
 	double	pos_y;
 	double	dir_x;
@@ -70,9 +89,12 @@ typedef struct s_game
 	double  camera_y;
 	double  ray_dir_x;
 	double  ray_dir_y;
-	double  side_dist_X;
+	double  side_dist_x;
 	double  side_dist_y;
-
+	double  delta_dist_x;
+	double  delta_dist_y;
+	double  perp_wall_dist;
+	
 	char	*NO_texture;
 	char	*SO_texture;
 	char	*WE_texture;
@@ -81,36 +103,26 @@ typedef struct s_game
 
 	int		floor_RGB[3];
 	int		ceiling_RGB[3];
+	t_data 	img;
 
 }			t_game;
 
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_data;
+
 
 // struct_handling.c
 t_game		*struct_init(void);
 void		struct_destroy(t_game **game);
 
 /* ===================================
- MLX WINDOW
+ RAYCASTING
 =================================== */
 
-// set_textures.c
-int			set_floor_ceiling(t_game *game);
-int set_2D_grid(t_game *game);
-int	create_rgb(int r, int g, int b);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+// raycasting.c
+void raycasting(t_game *game);
 
-// set_moves.c
-int handleKeyPress(int keycode, void *param);
-int handleKeyRelease(int keycode, void *param);
-int handleMoves(void *param);
+// render.c
+void draw_vertical_line(t_game *game, int x);
+int render_graphics(void *param);
 
 /* ===================================
  PARSER
@@ -118,16 +130,15 @@ int handleMoves(void *param);
 
 // check_game_config.c.c
 int	check_player(t_game *game);
-void	flood_algorithm(char ***map, int x, int y);
+void	flood_algorithm(char ***map, int x, int y, t_game *game);
 int	check_wall(t_game *game, char **map);
 
 // errors.c
-void		exit_err_parser(int code);
 void		err_parser(int code);
 void		err_mlx(int code);
 
 // loads_elements.c
-int	load_elements(t_game *game);
+int	load_elements(t_game *game, int fd);
 
 // load_map.c
 int	load_map(t_game *game);
@@ -161,6 +172,9 @@ void		free_char_array(char ***tab);
 void		free_str(char **s);
 void		close_fd(int *fd);
 char		**ft_arrdup(char **tab);
+
+// raycasting_utils.c
+
 
 // main.c
 void		print_map(char **map);

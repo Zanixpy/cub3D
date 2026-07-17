@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:44:16 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/13 01:20:18 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/16 13:52:50 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,14 @@ int	main(int ac, char **av)
 	t_game	*game;
 
     if (ac != 2)
-    {
-        if (ac < 2)
-            err_parser(0);
-        else
-            err_parser(1);
-        return (1);
-    }
-	if (parser(av, &game))
+        return (err_parser(0), 1);
+    if (parser(av, &game))
     {
 	    struct_destroy(&game);
         return (1);
     }
-    // mlx_loop(game->mlx);
+    mlx_loop_hook(game->mlx, render_graphics, game);
+    mlx_loop(game->mlx);
 	struct_destroy(&game);
 	return (0);
 }

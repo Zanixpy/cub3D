@@ -1,0 +1,16 @@
+{
+  "name": "42 Ubuntu + MLX",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "settings": {
+    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
+  },
+  "extensions": [
+    "ms-vscode.cpptools",
+    "ms-vscode.makefile-tools"
+  ],
+  "remoteUser": "root"
+}

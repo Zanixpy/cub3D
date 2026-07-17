@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:52:46 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/13 01:15:56 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/15 09:50:34 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,18 @@ int	check_player(t_game *game)
 	return (0);
 }
 
-void	flood_algorithm(char ***map, int x, int y)
+void	flood_algorithm(char ***map, int x, int y, t_game *game)
 {
-	if (x < 0 || y < 0)
+	if (x < 0 || y < 0 || x == game->width || y == game->height)
 		return ;
 	if (!(*map)[y][x] || (*map)[y][x] == SPACE || (*map)[y][x] == '1'
 		|| (*map)[y][x] == 'T')
 		return ;
 	(*map)[y][x] = 'T';
-	flood_algorithm(map, x, y + 1);
-	flood_algorithm(map, x, y - 1);
-	flood_algorithm(map, x + 1, y);
-	flood_algorithm(map, x - 1, y);
+	flood_algorithm(map, x, y + 1, game);
+	flood_algorithm(map, x, y - 1, game);
+	flood_algorithm(map, x + 1, y, game);
+	flood_algorithm(map, x - 1, y, game);
 }
 
 int	check_wall(t_game *game, char **map)

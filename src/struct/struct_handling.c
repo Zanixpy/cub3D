@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 18:31:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/13 01:23:00 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/17 13:10:44 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	struct_destroy_data(t_game *game)
 		mlx_destroy_image(game->mlx, game->texture[2]);
 	if (game->texture[3])
 		mlx_destroy_image(game->mlx, game->texture[3]);
+	if (game->img.img)
+		mlx_destroy_image(game->mlx, game->img.img);
 	mlx_cleanup(game);
 }
 
@@ -64,6 +66,8 @@ t_game	*struct_init(void)
     tmp->texture[3] = NULL;
 	tmp->pos_x = 0;
 	tmp->pos_y = 0;
+	tmp->dir_x = 0;
+	tmp->dir_y = 0;
 	return (tmp);
 }
 

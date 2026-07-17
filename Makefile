@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g3 -Wall -Wextra -Werror
 
 SRCS =  src/main.c \
 		src/parser/parser.c \
@@ -12,6 +12,8 @@ SRCS =  src/main.c \
 		src/struct/struct_handling.c \
 		src/utils/memory_utils.c \
 		src/utils/utils.c \
+		src/raycasting/raycasting.c \
+		src/raycasting/render.c \
 
 
 		

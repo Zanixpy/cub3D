@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 18:23:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/13 01:14:25 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/17 14:13:24 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ static int	is_RGB_utils(char *str)
 			count++;
 			while (str[i] && ft_isdigit(str[i]))
 				i++;
-			if (str[i] == ',')
+			if (count < 3 && str[i] == ',')
 				i++;
 		}
-		else
+		else if (count == 3 && str[i] != '\0' && str[i] != SPACE && str[i] != '\n')
 			return (0);
+		else
+			i++;
 	}
-	if (count != 3)
-		return (0);
 	return (1);
 }
 
@@ -56,7 +56,7 @@ int	is_RGB(char *str)
 				i++;
 			}
 			if (nb > 255 || nb < 0)
-				return (0);
+				return (0);				
 		}
 		else
 			i++;
@@ -87,19 +87,19 @@ int	check_filename(char *filename, char *extension)
 	tmp = filename;
 	len = ft_strlen(tmp);
 	if (len < 5)
-		return (err_parser(2), 1);
+		return (err_parser(1), 1);
 	if (ft_strchr(tmp, '/'))
 	{
 		tab = ft_split(tmp, '/');
 		if (!tab)
-			return (err_parser(3), 1);
+			return (err_parser(2), 1);
 		tmp = tab[array_size(tab) - 1];
 		len = ft_strlen(tmp);
 		if (len < 5)
-			return (err_parser(2), free_char_array(&tab), 1);
+			return (err_parser(1), free_char_array(&tab), 1);
 	}
 	if (ft_strcmp(tmp + (len - 4), extension))
-		return (err_parser(2), 1);
+		return (err_parser(1), free_char_array(&tab), 1);
 	free_char_array(&tab);
 	return (0);
 }

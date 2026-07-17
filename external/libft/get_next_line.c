@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 16:39:45 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/12 22:49:10 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/15 09:47:28 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	free_str(char **s)
 {
-	if ((*s))
+	if (*s)
 	{
 		free(*s);
 		*s = NULL;
@@ -93,6 +93,7 @@ static int	read_line(int fd, char **tmp_buf)
 		buf[n] = '\0';
 		tmp = *tmp_buf;
 		*tmp_buf = ft_strjoin(tmp, buf);
+		free(tmp);
 		if (!(*tmp_buf))
 			return (free(buf), -2);
 		if (ft_strchr(*tmp_buf, '\n') || n < BUFFER_SIZE)
