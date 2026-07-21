@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 18:23:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/17 14:13:24 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/19 15:55:49 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,10 @@ int	is_RGB(char *str)
 	return (1);
 }
 
-int	is_element_complete(t_game *game)
+int	is_element_complete(t_texture *tex)
 {
-	if (game->floor_RGB[0] == -1 || game->floor_RGB[1] == -1
-		|| game->floor_RGB[2] == -1)
-		return (0);
-	if (game->ceiling_RGB[0] == -1 || game->ceiling_RGB[1] == -1
-		|| game->ceiling_RGB[2] == -1)
-		return (0);
-	if (!game->NO_texture || !game->EA_texture || !game->WE_texture
-		|| !game->SO_texture)
+	if (tex->floor == -1 || tex->ceiling == -1 
+		|| !tex->NO_texture.img || !tex->SO_texture.img || !tex->WE_texture.img || !tex->EA_texture.img)
 		return (0);
 	return (1);
 }

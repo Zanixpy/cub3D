@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:14:27 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/16 09:45:25 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/18 08:58:24 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	err_mlx(int code)
 	if (code == 0)
 		ft_putendl_fd("mlx: init failed", 2);
 	else if (code == 1)
-		ft_putendl_fd("mlx: textures load failed", 2);
+		ft_putendl_fd("mlx: malloc failed for image", 2);
 	else if (code == 2)
-		ft_putendl_fd("mlx: malloc failed for textures", 2);
+		ft_putendl_fd("mlx: malloc failed for image address", 2);
+	
 }

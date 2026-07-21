@@ -4,9 +4,9 @@ SO textures/kobe.xpm
 WE              textures/kobe.xpm               
 EA textures/kobe.xpm
 
-F 220,100,0     
+F 230,230,230     
 
-C 225,30,0
+C 238,242,122
 
         111111111111111111111111
         1000000000110000000000001

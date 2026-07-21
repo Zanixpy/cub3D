@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 10:06:59 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/17 13:12:12 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/17 17:06:48 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void create_ray(t_game *game, int x)
 {
     game->camera_x = 2 * x / (double)SCREENWIDTH - 1;
     game->ray_dir_x = game->dir_x + game->plane_x * game->camera_x;
-    game->ray_dir_y = game->dir_y + game->plane_y * game->camera_y;
+    game->ray_dir_y = game->dir_y + game->plane_y * game->camera_x;
     game->map_x = (int)game->pos_x;
     game->map_y = (int)game->pos_y;
     if (game->ray_dir_x == 0)
@@ -109,7 +109,7 @@ void raycasting(t_game *game)
         create_ray(game, x);
         dda_algorithm(game);
         get_wall_height(game);
-        draw_vertical_line(game, 0);
+        draw_vertical_line(game, x);
         x++;        
     }   
 }

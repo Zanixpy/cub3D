@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 21:14:56 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/12 23:03:47 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/20 07:55:10 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,9 @@ int	is_space(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int	get_rgb(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
 }

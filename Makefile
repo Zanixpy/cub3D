@@ -12,8 +12,11 @@ SRCS =  src/main.c \
 		src/struct/struct_handling.c \
 		src/utils/memory_utils.c \
 		src/utils/utils.c \
+		src/utils/time_utils.c \
 		src/raycasting/raycasting.c \
 		src/raycasting/render.c \
+		src/raycasting/moves.c \
+		src/raycasting/hook.c \
 
 
 		

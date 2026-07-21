@@ -6,15 +6,27 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 18:31:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/17 13:10:44 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/21 05:40:08 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
 
-static void mlx_cleanup(t_game *game)
+static void	struct_destroy_data(t_game *game)
 {
+	free_char_array(&game->map);
+	free_str(&game->filename);
+	if (game->tex.NO_texture.img)
+		mlx_destroy_image(game->mlx, game->tex.NO_texture.img);
+	if (game->tex.SO_texture.img)
+		mlx_destroy_image(game->mlx, game->tex.SO_texture.img);
+	if (game->tex.WE_texture.img)
+		mlx_destroy_image(game->mlx, game->tex.WE_texture.img);
+	if (game->tex.EA_texture.img)
+		mlx_destroy_image(game->mlx, game->tex.EA_texture.img);
+	if (game->tex.display.img)
+		mlx_destroy_image(game->mlx, game->tex.display.img);
 	if (game->mlx_win)
 		mlx_destroy_window(game->mlx, game->mlx_win);
 	if (game->mlx)
@@ -24,27 +36,6 @@ static void mlx_cleanup(t_game *game)
 	}
 }
 
-static void	struct_destroy_data(t_game *game)
-{
-	free_char_array(&game->map);
-	free_str(&game->NO_texture);
-	free_str(&game->SO_texture);
-	free_str(&game->WE_texture);
-	free_str(&game->EA_texture);
-	free_str(&game->filename);
-	if (game->texture[0])
-		mlx_destroy_image(game->mlx, game->texture[0]);
-	if (game->texture[1])
-		mlx_destroy_image(game->mlx, game->texture[1]);
-	if (game->texture[2])
-		mlx_destroy_image(game->mlx, game->texture[2]);
-	if (game->texture[3])
-		mlx_destroy_image(game->mlx, game->texture[3]);
-	if (game->img.img)
-		mlx_destroy_image(game->mlx, game->img.img);
-	mlx_cleanup(game);
-}
-
 t_game	*struct_init(void)
 {
 	t_game	*tmp;
@@ -52,22 +43,27 @@ t_game	*struct_init(void)
 	tmp = ft_calloc(1, sizeof(t_game));
 	if (!tmp)
 		return (NULL);
-	tmp->floor_RGB[0] = -1;
-	tmp->floor_RGB[1] = -1;
-	tmp->floor_RGB[2] = -1;
-	tmp->ceiling_RGB[0] = -1;
-	tmp->ceiling_RGB[1] = -1;
-	tmp->ceiling_RGB[2] = -1;
+	tmp->tex.floor = -1;
+	tmp->tex.ceiling = -1;
 	tmp->height = 0;
 	tmp->width = 0;
-	tmp->texture[0] = NULL;
-    tmp->texture[1] = NULL;
-    tmp->texture[2] = NULL;
-    tmp->texture[3] = NULL;
 	tmp->pos_x = 0;
 	tmp->pos_y = 0;
 	tmp->dir_x = 0;
 	tmp->dir_y = 0;
+	tmp->p.move_speed = 0.05;
+	tmp->p.rot_speed = 0.04;
+	tmp->p.backward = 0;
+	tmp->p.right = 0;
+	tmp->p.foward = 0;
+	tmp->p.left = 0;
+	tmp->p.rotate_right = 0;
+	tmp->p.rotate_left = 0;
+	tmp->plane_x = 0.0;
+	tmp->plane_y = 0.66;
+	tmp->frame_time_ms = 0.0;
+	tmp->delta_time = 0.0;
+	tmp->last_frame = 0.0;
 	return (tmp);
 }
 
