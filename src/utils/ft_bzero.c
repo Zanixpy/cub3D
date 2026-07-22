@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 13:38:48 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/07 15:21:59 by omawele          ###   ########.fr       */
+/*   Created: 2025/11/06 13:36:11 by omawele           #+#    #+#             */
+/*   Updated: 2026/07/22 08:07:31 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
-int	ft_isascii(int c)
+void	ft_bzero(void *s, unsigned int n)
 {
-	if (c == 0)
-		return (-1);
-	if (c >= 0 && c <= 127)
-		return (c);
-	return (0);
+	unsigned char	*d;
+	unsigned int	i;
+
+	d = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		d[i] = 0;
+		i++;
+	}
 }

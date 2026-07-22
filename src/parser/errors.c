@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:14:27 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/18 08:58:24 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:31:19 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	err_parser(int code)
 		ft_putendl_fd("map: duplicate textures/color", 2);
 }
 
-
 void	err_mlx(int code)
 {
 	ft_putendl_fd("Error", 2);
@@ -49,5 +48,4 @@ void	err_mlx(int code)
 		ft_putendl_fd("mlx: malloc failed for image", 2);
 	else if (code == 2)
 		ft_putendl_fd("mlx: malloc failed for image address", 2);
-	
 }

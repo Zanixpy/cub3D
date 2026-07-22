@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 13:29:28 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/06 13:30:36 by omawele          ###   ########.fr       */
+/*   Created: 2025/11/07 15:41:50 by omawele           #+#    #+#             */
+/*   Updated: 2026/07/22 08:06:34 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
-int	ft_isdigit(int c)
+void	ft_putendl_fd(char *s, int fd)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	while (*s)
+	{
+		if (write(fd, s, 1) < 0)
+			return ;
+		s++;
+	}
+	if (write(fd, "\n", 1) < 0)
+		return ;
 }

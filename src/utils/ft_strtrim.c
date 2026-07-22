@@ -6,11 +6,11 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 11:47:36 by omawele           #+#    #+#             */
-/*   Updated: 2026/06/27 22:43:55 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 07:53:13 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
 static int	chr(char c, char const *set)
 {

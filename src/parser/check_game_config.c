@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:52:46 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/15 09:50:34 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:37:10 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_wall_border(t_game *game, char **map, int *x, int y)
 	if (map[y][*x + 1] == '\0' && map[y][*x] != '1')
 		return (1);
 	if ((y == 0 || y == game->height - 1) && (map[y][*x] != '1'
-			&& map[y][*x] != SPACE))
+		&& map[y][*x] != SPACE))
 		return (1);
 	if (map[y][*x] == 'T' && ((map[y][*x + 1] != '1' && map[y][*x + 1] != 'T')
 			|| (map[y][*x - 1] != '1' && map[y][*x - 1] != 'T') || (map[y

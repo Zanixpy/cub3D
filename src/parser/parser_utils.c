@@ -6,13 +6,13 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 18:23:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/19 15:55:49 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:46:33 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static int	is_RGB_utils(char *str)
+static int	is_rgb_utils(char *str)
 {
 	int	count;
 	int	i;
@@ -29,7 +29,8 @@ static int	is_RGB_utils(char *str)
 			if (count < 3 && str[i] == ',')
 				i++;
 		}
-		else if (count == 3 && str[i] != '\0' && str[i] != SPACE && str[i] != '\n')
+		else if (count == 3 && str[i] != '\0' && str[i] != SPACE
+			&& str[i] != '\n')
 			return (0);
 		else
 			i++;
@@ -37,12 +38,12 @@ static int	is_RGB_utils(char *str)
 	return (1);
 }
 
-int	is_RGB(char *str)
+int	is_rgb(char *str)
 {
 	int	i;
 	int	nb;
 
-	if (!is_RGB_utils(str))
+	if (!is_rgb_utils(str))
 		return (0);
 	i = 0;
 	while (str[i])
@@ -56,19 +57,11 @@ int	is_RGB(char *str)
 				i++;
 			}
 			if (nb > 255 || nb < 0)
-				return (0);				
+				return (0);
 		}
 		else
 			i++;
 	}
-	return (1);
-}
-
-int	is_element_complete(t_texture *tex)
-{
-	if (tex->floor == -1 || tex->ceiling == -1 
-		|| !tex->NO_texture.img || !tex->SO_texture.img || !tex->WE_texture.img || !tex->EA_texture.img)
-		return (0);
 	return (1);
 }
 

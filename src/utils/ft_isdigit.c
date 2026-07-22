@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 13:34:06 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/08 11:43:24 by omawele          ###   ########.fr       */
+/*   Created: 2025/11/06 13:29:28 by omawele           #+#    #+#             */
+/*   Updated: 2026/07/22 07:52:37 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
-int	ft_tolower(int c)
+int	ft_isdigit(int c)
 {
-	char	s;
-
-	s = c;
-	if ((s >= 'A' && s <= 'Z'))
-	{
-		s += 32;
-		return (s);
-	}
-	return (c);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

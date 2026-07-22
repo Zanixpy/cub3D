@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:10:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/20 06:45:08 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,34 @@ int	set_filename(t_game *game, char *filename)
 	return (0);
 }
 
-int load_textures(t_texture *tex)
+int	load_textures(t_texture *tex)
 {
-	tex->NO_texture.addr = mlx_get_data_addr(tex->NO_texture.img, &tex->NO_texture.bits_per_pixel, &tex->NO_texture.line_length, &tex->NO_texture.endian);
-	if (!tex->NO_texture.addr)
+	tex->no_texture.addr = mlx_get_data_addr(tex->no_texture.img,
+			&tex->no_texture.bits_per_pixel, &tex->no_texture.line_length,
+			&tex->no_texture.endian);
+	if (!tex->no_texture.addr)
 		return (1);
-	tex->SO_texture.addr = mlx_get_data_addr(tex->SO_texture.img, &tex->SO_texture.bits_per_pixel, &tex->SO_texture.line_length, &tex->SO_texture.endian);
-	if (!tex->SO_texture.addr)
+	tex->so_texture.addr = mlx_get_data_addr(tex->so_texture.img,
+			&tex->so_texture.bits_per_pixel, &tex->so_texture.line_length,
+			&tex->so_texture.endian);
+	if (!tex->so_texture.addr)
 		return (1);
-	tex->WE_texture.addr = mlx_get_data_addr(tex->WE_texture.img, &tex->WE_texture.bits_per_pixel, &tex->WE_texture.line_length, &tex->WE_texture.endian);
-	if (!tex->WE_texture.addr)
+	tex->we_texture.addr = mlx_get_data_addr(tex->we_texture.img,
+			&tex->we_texture.bits_per_pixel, &tex->we_texture.line_length,
+			&tex->we_texture.endian);
+	if (!tex->we_texture.addr)
 		return (1);
-	tex->EA_texture.addr = mlx_get_data_addr(tex->EA_texture.img, &tex->EA_texture.bits_per_pixel, &tex->EA_texture.line_length, &tex->EA_texture.endian);
-	if (!tex->EA_texture.addr)
+	tex->ea_texture.addr = mlx_get_data_addr(tex->ea_texture.img,
+			&tex->ea_texture.bits_per_pixel, &tex->ea_texture.line_length,
+			&tex->ea_texture.endian);
+	if (!tex->ea_texture.addr)
 		return (1);
 	return (0);
 }
 
 int	parse_map_file(t_game *game)
 {
-	int fd;
+	int	fd;
 
 	fd = open(game->filename, O_RDONLY);
 	if (fd == -1)
@@ -67,9 +75,10 @@ int	is_valid_config(t_game *game)
 	flood_algorithm(&map, game->pos_x, game->pos_y, game);
 	if (check_wall(game, map))
 		return (free_char_array(&map), err_parser(7), 1);
-	free_char_array(&map);
-	game->plane_x = 0.0;
-	game->plane_y = 0.66;
+	game->pos_x += 0.5;
+	game->pos_y += 0.5;
+	game->dir_y = 0.0;
+	game->dir_x = 0.0;
 	if (game->player_direction == 'N')
 		game->dir_y = 1.0;
 	else if (game->player_direction == 'S')
@@ -77,8 +86,10 @@ int	is_valid_config(t_game *game)
 	else if (game->player_direction == 'E')
 		game->dir_x = 1.0;
 	else if (game->player_direction == 'W')
-		game->dir_y = -1.0;
-	return (0);
+		game->dir_x = -1.0;
+	game->plane_x = -game->dir_y * 0.66;
+	game->plane_y = game->dir_x * 0.66;
+	return (free_char_array(&map), 0);
 }
 
 int	parser(char **av, t_game **game)
@@ -91,9 +102,8 @@ int	parser(char **av, t_game **game)
 	if (set_filename(*game, av[1]))
 		return (1);
 	if (parse_map_file(*game))
-		return (1);		
+		return (1);
 	if (is_valid_config(*game))
 		return (1);
-
 	return (0);
 }

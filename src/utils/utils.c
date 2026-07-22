@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 21:14:56 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/20 07:55:10 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:35:04 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,10 @@ char	*clean_str(char *s, int mode)
 	return (str);
 }
 
-
-int	is_space(char *str)
+size_t	get_time(void)
 {
-	int	i;
+	struct timeval	tv;
 
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != SPACE && (str[i] < 9 || str[i] > 13))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	get_rgb(int r, int g, int b)
-{
-	return (r << 16 | g << 8 | b);
+	gettimeofday(&tv, NULL);
+	return (((tv.tv_sec) * 1000) + (tv.tv_usec / 1000));
 }

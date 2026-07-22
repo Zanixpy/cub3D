@@ -6,85 +6,83 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 13:05:09 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/21 05:48:12 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+t_data	*select_texture(t_game *game)
 {
-	char	*dst;
-
-    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (game->side == 0)
+	{
+		if (game->ray_dir_x > 0)
+			return (&game->tex.we_texture);
+		return (&game->tex.ea_texture);
+	}
+	if (game->ray_dir_y > 0)
+		return (&game->tex.so_texture);
+	return (&game->tex.no_texture);
 }
 
-int get_tex_color(t_data *tex, int tex_x, int tex_y)
+void	texturing_calculations(t_game *game)
 {
-    char    *pixel;
-    int     color;
+	int	line_height;
 
-    if (tex_x < 0 || tex_x >= SCREENWIDTH || tex_y < 0 || tex_y >= SCREENHEIGHT)
-        return (0);
-    
-    pixel = tex->addr + (tex_y * tex->line_length + tex_x * (tex->bits_per_pixel / 8));
-    color = *(int *)pixel;
-    return (color);
+	line_height = game->draw_end - game->draw_start;
+	if (line_height == 0)
+		line_height = 1;
+	if (game->side == 0)
+		game->wall_x = game->pos_y + game->perp_wall_dist * game->ray_dir_y;
+	else
+		game->wall_x = game->pos_x + game->perp_wall_dist * game->ray_dir_x;
+	game->wall_x -= floor(game->wall_x);
+	game->tex_x = (int)(game->wall_x * (double)TEXWIDTH);
+	if (game->side == 0 && game->ray_dir_x > 0)
+		game->tex_x = TEXWIDTH - game->tex_x - 1;
+	if (game->side == 1 && game->ray_dir_y < 0)
+		game->tex_x = TEXWIDTH - game->tex_x - 1;
+	game->step = 1.0 * TEXHEIGHT / line_height;
+	game->tex_pos = (game->draw_start - SCREENHEIGHT / 2 + line_height / 2)
+		* game->step;
 }
 
-void texturing_calculations(t_game *game)
+void	draw_vertical_line(t_game *game, int x)
 {
-    int line_height;
+	int		y;
+	t_data	*tex;
 
-    line_height = game->draw_end - game->draw_start;
-    if (game->side == 0)
-        game->wall_x = game->pos_y + game->perp_wall_dist * game->ray_dir_y;
-    else
-        game->wall_x = game->pos_x + game->perp_wall_dist * game->ray_dir_x;
-    game->wall_x -= floor(game->wall_x);
-    game->tex_x = (int)(game->wall_x * (double)TEXWIDTH);
-    game->step = 1.0 * TEXHEIGHT / line_height;
-    game->tex_pos = (game->draw_start - SCREENHEIGHT / 2 + line_height / 2) * game->step;
+	y = 0;
+	texturing_calculations(game);
+	tex = select_texture(game);
+	while (y < game->draw_start && y < SCREENHEIGHT)
+	{
+		my_mlx_pixel_put(&game->tex.display, x, y, game->tex.ceiling);
+		y++;
+	}
+	y = game->draw_start;
+	if (y < 0)
+		y = 0;
+	while (y <= game->draw_end && y < SCREENHEIGHT)
+	{
+		game->tex_y = (int)game->tex_pos % TEXHEIGHT;
+		game->tex_pos += game->step;
+		my_mlx_pixel_put(&game->tex.display, x, y, get_tex_color(tex,
+				game->tex_x, game->tex_y));
+		y++;
+	}
+	y = game->draw_end;
+	while (++y < SCREENHEIGHT)
+		my_mlx_pixel_put(&game->tex.display, x, y, game->tex.floor);
 }
 
-void draw_vertical_line(t_game *game, int x)
+int	render_graphics(void *param)
 {
-    int y;
-    
-    y = 0;
-    texturing_calculations(game);
-    while (y < game->draw_start && y < SCREENHEIGHT)
-    {
-        my_mlx_pixel_put(&game->tex.display, x, y, game->tex.ceiling);
-        y++;        
-    }
-    y = game->draw_start;
-    if (y < 0)
-        y = 0;
-    while (y <= game->draw_end && y < SCREENHEIGHT)
-    {
-        game->tex_y = (int)game->tex_pos % (TEXHEIGHT - 1);
-        game->tex_pos += game->step;
-        my_mlx_pixel_put(&game->tex.display, x, y, get_tex_color(&game->tex.NO_texture, x, game->tex_y));
-        y++;
-    }
-    y = game->draw_end + 1;
-    while (y < SCREENHEIGHT)
-    {
-        my_mlx_pixel_put(&game->tex.display, x, y, game->tex.floor);
-        y++;
-    }
-}
+	t_game	*game;
 
-int render_graphics(void *param)
-{
-    t_game *game;
-
-    game = (t_game *)param;
-    raycasting(game);
-    mlx_put_image_to_window(game->mlx, game->mlx_win, game->tex.display.img, 0, 0);
-    return (0);
+	game = (t_game *)param;
+	raycasting(game);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->tex.display.img, 0,
+		0);
+	return (0);
 }

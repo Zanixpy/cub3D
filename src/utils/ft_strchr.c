@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 13:36:11 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/07 15:20:30 by omawele          ###   ########.fr       */
+/*   Created: 2025/11/07 16:30:31 by omawele           #+#    #+#             */
+/*   Updated: 2026/07/22 07:52:50 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
-void	ft_bzero(void *s, unsigned int n)
+char	*ft_strchr(const char *s, int c)
 {
-	unsigned char	*d;
-	unsigned int	i;
+	char	src;
 
-	d = (unsigned char *)s;
-	i = 0;
-	while (i < n)
+	src = c;
+	while (*s)
 	{
-		d[i] = 0;
-		i++;
+		if (*s == src)
+			return ((char *)s);
+		s++;
 	}
+	if (*s == src)
+		return ((char *)s);
+	return (NULL);
 }

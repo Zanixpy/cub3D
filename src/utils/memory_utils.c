@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 21:21:19 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/01 14:43:27 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:32:42 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,11 @@ void	close_fd(int *fd)
 	*fd = -2;
 }
 
-
-char **ft_arrdup(char **tab)
+char	**ft_arrdup(char **tab)
 {
-	char **tmp;
-	int len;
-	int i;
+	char	**tmp;
+	int		len;
+	int		i;
 
 	len = array_size(tab);
 	tmp = ft_calloc(len + 1, sizeof(char *));

@@ -6,20 +6,11 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 16:39:45 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/15 09:47:28 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:32:39 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static void	free_str(char **s)
-{
-	if (*s)
-	{
-		free(*s);
-		*s = NULL;
-	}
-}
+#include "cub.h"
 
 static char	*update_tmp_buf(char **tmp_buf)
 {
@@ -84,7 +75,7 @@ static int	read_line(int fd, char **tmp_buf)
 	char	*tmp;
 	int		n;
 
-	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buf = ft_calloc((size_t)BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
 		return (-2);
 	n = read(fd, buf, BUFFER_SIZE);
@@ -96,8 +87,8 @@ static int	read_line(int fd, char **tmp_buf)
 		free(tmp);
 		if (!(*tmp_buf))
 			return (free(buf), -2);
-		if (ft_strchr(*tmp_buf, '\n') || n < BUFFER_SIZE)
-			return (free(buf), n);
+		if (ft_strchr(*tmp_buf, '\n'))
+			break ;
 		n = read(fd, buf, BUFFER_SIZE);
 	}
 	return (free(buf), n);
@@ -108,7 +99,7 @@ char	*get_next_line(int fd)
 	static char	*tmp_buf = NULL;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free_str(&tmp_buf);
 		return (NULL);
@@ -120,7 +111,10 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	if (read_line(fd, &tmp_buf) < 0)
-		return (free_str(&tmp_buf), NULL);
+	{
+		free_str(&tmp_buf);
+		return (NULL);
+	}
 	if (!tmp_buf || tmp_buf[0] == '\0')
 		return (free_str(&tmp_buf), NULL);
 	line = create_line(&tmp_buf);
@@ -128,15 +122,3 @@ char	*get_next_line(int fd)
 		return (free_str(&tmp_buf), NULL);
 	return (line);
 }
-/*int main(void)
-{
-	int fd = open("test.txt", O_RDONLY);
-	char *s = "Zan";
-	while ((s = get_next_line(fd)) != NULL)
-	{
-		printf("%s", s);
-		if (s)
-			free(s);
-	}
-	return (0);
-}*/

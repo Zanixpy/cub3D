@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 16:33:20 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/07 16:35:42 by omawele          ###   ########.fr       */
+/*   Created: 2025/11/06 13:38:18 by omawele           #+#    #+#             */
+/*   Updated: 2026/07/22 07:54:58 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+int	ft_isalpha(int c)
 {
-	int	n;
-
-	if (!s || !f)
-		return ;
-	n = 0;
-	while (s[n])
-	{
-		(*f)(n, (s + n));
-		n++;
-	}
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
 }

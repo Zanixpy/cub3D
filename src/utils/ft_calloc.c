@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 14:21:32 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/06 14:22:11 by omawele          ###   ########.fr       */
+/*   Created: 2025/11/06 13:08:18 by omawele           #+#    #+#             */
+/*   Updated: 2026/07/22 07:51:43 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
-t_list	*ft_lstnew(void *content)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	t_list	*p;
+	void	*tab;
 
-	p = malloc(sizeof(t_list));
-	if (p == NULL)
+	if (nmemb * size > SIZE_MAX || nmemb == SIZE_MAX || size == SIZE_MAX)
 		return (NULL);
-	p->content = content;
-	p->next = NULL;
-	return (p);
+	tab = malloc(nmemb * size);
+	if (tab == NULL)
+		return (NULL);
+	ft_bzero(tab, nmemb * size);
+	return (tab);
 }

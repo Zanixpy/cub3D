@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 17:28:07 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/20 07:53:55 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	**extract_color(char *line)
 		i++;
 	if (tmp[i] == '\0' || !ft_isdigit(tmp[i]))
 		return (free(tmp), err_parser(4), NULL);
-	if (!is_RGB(tmp + i))
+	if (!is_rgb(tmp + i))
 		return (free(tmp), err_parser(5), NULL);
 	tab = ft_split(tmp + i, ',');
 	free(tmp);
@@ -64,9 +64,9 @@ static char	**extract_color(char *line)
 static int	get_texture(t_game *game, char *line, int ret)
 {
 	char	*tmp;
-	void 	*img;
-	int 	width;
-	int 	height;
+	void	*img;
+	int		width;
+	int		height;
 
 	tmp = extract_texture_path(line);
 	if (!tmp)
@@ -77,16 +77,16 @@ static int	get_texture(t_game *game, char *line, int ret)
 	free(tmp);
 	if (!img)
 		return (-1);
-	if (ret == 1 && !game->tex.NO_texture.img)
-		game->tex.NO_texture.img = img;
-	else if (ret == 2 && !game->tex.SO_texture.img)
-		game->tex.SO_texture.img = img;
-	else if (ret == 3 && !game->tex.WE_texture.img)
-		game->tex.WE_texture.img = img;
-	else if (ret == 4 && !game->tex.EA_texture.img)
-		game->tex.EA_texture.img = img;
+	if (ret == 1 && !game->tex.no_texture.img)
+		game->tex.no_texture.img = img;
+	else if (ret == 2 && !game->tex.so_texture.img)
+		game->tex.so_texture.img = img;
+	else if (ret == 3 && !game->tex.we_texture.img)
+		game->tex.we_texture.img = img;
+	else if (ret == 4 && !game->tex.ea_texture.img)
+		game->tex.ea_texture.img = img;
 	else
-		return (err_parser(9), mlx_destroy_image(game->mlx, img),  -1);		
+		return (err_parser(9), mlx_destroy_image(game->mlx, img), -1);
 	return (0);
 }
 
@@ -100,7 +100,8 @@ static int	get_color(t_texture *tex, char *line, int ret)
 	if (ret == 5 && tex->floor == -1)
 		tex->floor = get_rgb(ft_atoi(tmp[0]), ft_atoi(tmp[1]), ft_atoi(tmp[2]));
 	else if (ret == 6 && tex->ceiling == -1)
-		tex->ceiling = get_rgb(ft_atoi(tmp[0]), ft_atoi(tmp[1]), ft_atoi(tmp[2]));
+		tex->ceiling = get_rgb(ft_atoi(tmp[0]), ft_atoi(tmp[1]),
+				ft_atoi(tmp[2]));
 	else
 		return (err_parser(9), free_char_array(&tmp), -1);
 	free_char_array(&tmp);
@@ -126,8 +127,7 @@ int	load_elements(t_game *game, int fd)
 				return (err_parser(5), close(fd), free(line), get_next_line(-1),
 					1);
 			if (ret == -1)
-				return (close(fd), free(line), get_next_line(-1),
-					1);
+				return (close(fd), free(line), get_next_line(-1), 1);
 		}
 		free(line);
 		line = get_next_line(fd);

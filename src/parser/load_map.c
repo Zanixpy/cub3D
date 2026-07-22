@@ -6,59 +6,11 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 22:19:39 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/16 09:53:53 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 10:39:27 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-int	is_map_element(t_game *game, char *line)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(line) - 1;
-	while (i < len)
-	{
-		if (line[i] != SPACE && line[i] != '0' && line[i] != '1'
-			&& line[i] != 'N' && line[i] != 'S' && line[i] != 'E'
-			&& line[i] != 'W')
-			return (0);
-		i++;
-	}
-	if (game->width < i)
-		game->width = i;
-	return (1);
-}
-
-int	is_element(char *line)
-{
-	while (*line)
-	{
-		if (ft_isalpha(*line))
-		{
-			if (!ft_strncmp(line, "NO ", 3))
-				return (1);
-			else if (!ft_strncmp(line, "SO ", 3))
-				return (2);
-			else if (!ft_strncmp(line, "WE ", 3))
-				return (3);
-			else if (!ft_strncmp(line, "EA ", 3))
-				return (4);
-			else if (!ft_strncmp(line, "F ", 2))
-				return (5);
-			else if (!ft_strncmp(line, "C ", 2))
-				return (6);
-			else
-				return (0);
-		}
-		else if (*line != SPACE)
-			return (0);
-		line++;
-	}
-	return (0);
-}
 
 static int	count_line(t_game *game)
 {
@@ -89,20 +41,19 @@ static int	count_line(t_game *game)
 	return (close(fd), count);
 }
 
-static int	get_map(t_game *game, int fd)
+static int	get_map(t_game *game, int fd, int start)
 {
 	char	*line;
-	int		start;
 	int		i;
 
 	line = get_next_line(fd);
-	start = 0;
 	i = 0;
 	while (line)
 	{
 		if (start != 6 && is_element(line))
 			start++;
-		else if (is_map_element(game, line) && start == 6 && line[0] != '\n' && !is_space(line))
+		else if (is_map_element(game, line) && start == 6 && line[0] != '\n'
+			&& !is_space(line))
 		{
 			game->map[i] = clean_str(line, 1);
 			if (!game->map[i])
@@ -131,7 +82,7 @@ int	load_map(t_game *game)
 	fd = open(game->filename, O_RDONLY);
 	if (fd == -1)
 		return (err_parser(3), 1);
-	if (get_map(game, fd))
+	if (get_map(game, fd, 0))
 		return (1);
 	return (0);
 }

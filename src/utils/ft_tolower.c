@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omawele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 13:38:18 by omawele           #+#    #+#             */
-/*   Updated: 2025/11/06 13:38:43 by omawele          ###   ########.fr       */
+/*   Created: 2025/11/06 13:34:06 by omawele           #+#    #+#             */
+/*   Updated: 2026/07/22 08:08:48 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub.h"
 
-int	ft_isalpha(int c)
+int	ft_tolower(int c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
+	char	s;
+
+	s = c;
+	if ((s >= 'A' && s <= 'Z'))
+	{
+		s += 32;
+		return (s);
+	}
+	return (c);
 }
