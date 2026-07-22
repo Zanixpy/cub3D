@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 17:28:07 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 12:04:38 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static char	*extract_texture_path(char *line)
 {
 	char	**tab;
 	char	*tmp;
+	int		fd;
 
 	tmp = clean_str(line, 0);
 	if (!tmp)
@@ -31,11 +32,13 @@ static char	*extract_texture_path(char *line)
 	}
 	if (check_filename(tab[1], ".xpm"))
 		return (free_char_array(&tab), NULL);
+	fd = open(tab[1], O_RDONLY);
+	if (fd == -1)
+		return (err_parser(3), free_char_array(&tab), NULL);
 	tmp = ft_strdup(tab[1]);
-	free_char_array(&tab);
 	if (!tmp)
-		return (err_parser(2), NULL);
-	return (tmp);
+		return (err_parser(2), free_char_array(&tab), close(fd), NULL);
+	return (free_char_array(&tab), close(fd), tmp);
 }
 
 static char	**extract_color(char *line)

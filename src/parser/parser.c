@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:10:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 11:37:35 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int	parser(char **av, t_game **game)
 	if (parse_map_file(*game))
 		return (1);
 	if (is_valid_config(*game))
+		return (1);
+	if (create_window(*game))
 		return (1);
 	return (0);
 }

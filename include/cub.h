@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 11:46:44 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ int				is_map_element(t_game *game, char *line);
 
 // init_mlx.c
 int				init_mlx(t_game *game);
+int				create_window(t_game *game);
 
 // parser_utils.c
 int				is_element(char *line);

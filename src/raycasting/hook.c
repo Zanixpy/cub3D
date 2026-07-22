@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 05:29:34 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:36:48 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 11:33:51 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	key_release(int code, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	if (code == 122)
+	if (code == 'w')
 		game->p.foward = 0;
-	else if (code == 100)
+	else if (code == 'd')
 		game->p.right = 0;
-	else if (code == 113)
+	else if (code == 'a')
 		game->p.left = 0;
-	else if (code == 115)
+	else if (code == 's')
 		game->p.backward = 0;
 	else if (code == 65361)
 		game->p.rotate_left = 0;
@@ -39,13 +39,13 @@ int	key_hold(int code, void *param)
 	game = (t_game *)param;
 	if (code == 65307)
 		exit_cleanup(param);
-	if (code == 122)
+	if (code == 'w')
 		game->p.foward = 1;
-	else if (code == 100)
+	else if (code == 'd')
 		game->p.right = 1;
-	else if (code == 113)
+	else if (code == 'a')
 		game->p.left = 1;
-	else if (code == 115)
+	else if (code == 's')
 		game->p.backward = 1;
 	else if (code == 65361)
 		game->p.rotate_left = 1;

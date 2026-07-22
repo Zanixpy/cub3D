@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 18:23:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:46:33 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 09:51:48 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	check_filename(char *filename, char *extension)
 	char	*tmp;
 	int		len;
 
+	tab = NULL;
 	tmp = filename;
 	len = ft_strlen(tmp);
 	if (len < 5)
