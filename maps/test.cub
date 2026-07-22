@@ -1,12 +1,12 @@
-NO           kobe_copy.xpm   
-SO textures/kobe.xpm
+NO          textures/eren.xpm   
+SO textures/sendo.xpm
           
-WE              textures/kobe.xpm               
-EA textures/kobe.xpm
+WE              textures/guts.xpm               
+EA textures/mikey.xpm
 
-F 230,230,230     
+F 50,50,50     
 
-C 238,242,122
+C 236,236,236
 
         111111111111111111111111
         1000000000110000000000001

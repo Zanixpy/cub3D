@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 13:05:09 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/22 14:04:10 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ t_data	*select_texture(t_game *game)
 
 void	texturing_calculations(t_game *game)
 {
-	int	line_height;
-
-	line_height = game->draw_end - game->draw_start;
-	if (line_height == 0)
-		line_height = 1;
+	if (game->line_height <= 0)
+		game->line_height = 1;
 	if (game->side == 0)
 		game->wall_x = game->pos_y + game->perp_wall_dist * game->ray_dir_y;
 	else
@@ -42,9 +39,9 @@ void	texturing_calculations(t_game *game)
 		game->tex_x = TEXWIDTH - game->tex_x - 1;
 	if (game->side == 1 && game->ray_dir_y < 0)
 		game->tex_x = TEXWIDTH - game->tex_x - 1;
-	game->step = 1.0 * TEXHEIGHT / line_height;
-	game->tex_pos = (game->draw_start - SCREENHEIGHT / 2 + line_height / 2)
-		* game->step;
+	game->step = 1.0 * TEXHEIGHT / game->line_height;
+	game->tex_pos = (game->draw_start - SCREENHEIGHT / 2 + game->line_height
+			/ 2) * game->step;
 }
 
 void	draw_vertical_line(t_game *game, int x)
