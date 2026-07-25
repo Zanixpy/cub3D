@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 20:10:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 11:37:35 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/25 16:15:14 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	parse_map_file(t_game *game)
 		return (err_parser(3), -1);
 	if (load_elements(game, fd))
 		return (1);
+	if (!is_element_complete(&game->tex))
+		return (err_parser(4), 1);
 	if (load_textures(&game->tex))
 		return (1);
 	if (load_map(game))

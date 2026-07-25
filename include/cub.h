@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:21:29 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 11:46:44 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/25 16:25:04 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void			draw_vertical_line(t_game *game, int x);
 int				render_graphics(void *param);
 
 // moves.c
-void			go_foward(t_game *game);
+void			go_forward(t_game *game);
 void			go_backward(t_game *game);
 void			go_right(t_game *game);
 void			go_left(t_game *game);

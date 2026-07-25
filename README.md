@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by omawele, .*
+*This project has been created as part of the 42 curriculum by omawele, nbasheer.*
 
 ## Description
 cub3D is a graphical design project that involves creating a "realistic" 3D representation of the inside of a maze from a first-person perspective. Inspired by the classic Wolfenstein 3D, this project utilizes a raycasting algorithm implemented in C to render the dynamic view. It serves as an exploration of practical mathematics, window management, event handling, and rendering utilizing the miniLibX library.

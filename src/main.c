@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 17:44:16 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:32:51 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/25 16:25:04 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	game_loop(void *param)
 	check_delta(game);
 	game->last_frame = current_time;
 	if (game->p.foward)
-		go_foward(game);
+		go_forward(game);
 	if (game->p.backward)
 		go_backward(game);
 	if (game->p.left)

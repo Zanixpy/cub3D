@@ -6,13 +6,13 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 10:08:41 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:31:59 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/25 16:25:04 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	go_foward(t_game *game)
+void	go_forward(t_game *game)
 {
 	double	new_x;
 	double	new_y;
