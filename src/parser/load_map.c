@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 22:19:39 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:39:27 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/31 14:54:33 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ static int	count_line(t_game *game)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (start != 6 && is_element(line))
-			start++;
-		else if (is_map_element(game, line) && start == 6 && (line[0] != '\n'
-				|| !is_space(line)))
+		if (is_map_element(game, line) && start == 6)
 			count++;
-		else if ((line[0] != '\n' && !is_space(line)) || count > 0)
+		else if (start != 6 && is_element(line))
+			start++;
+		else if (count > 0)
 			return (err_parser(6), close(fd), free(line), get_next_line(-1),
 				-1);
 		free(line);
@@ -52,8 +51,7 @@ static int	get_map(t_game *game, int fd, int start)
 	{
 		if (start != 6 && is_element(line))
 			start++;
-		else if (is_map_element(game, line) && start == 6 && line[0] != '\n'
-			&& !is_space(line))
+		else if (is_map_element(game, line) && start == 6)
 		{
 			game->map[i] = clean_str(line, 1);
 			if (!game->map[i])

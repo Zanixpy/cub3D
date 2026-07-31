@@ -1,0 +1,19 @@
+{
+  "name": "C-C++ Dev + Valgrind",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.makefile-tools"
+      ]
+    }
+  },
+
+  "features": {},
+  "remoteUser": "vscode"
+}

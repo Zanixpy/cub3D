@@ -1,5 +1,5 @@
 CC          = cc
-CFLAGS      = -g3 -O2 -Wall -Wextra -Werror -Wno-error=incompatible-pointer-types
+CFLAGS      = -g3 -Wall -Wextra -Werror -O2 -Wno-error=incompatible-pointer-types
 
 SRCS        = src/main.c \
               src/parser/parser.c \

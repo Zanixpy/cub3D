@@ -6,7 +6,7 @@
 /*   By: omawele <omawele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 07:26:17 by omawele           #+#    #+#             */
-/*   Updated: 2026/07/22 10:46:02 by omawele          ###   ########.fr       */
+/*   Updated: 2026/07/31 09:15:42 by omawele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	is_map_element(t_game *game, char *line)
 
 	i = 0;
 	len = ft_strlen(line) - 1;
+	if (len == 0)
+		return (0);
 	while (i < len)
 	{
 		if (line[i] != SPACE && line[i] != '0' && line[i] != '1'
